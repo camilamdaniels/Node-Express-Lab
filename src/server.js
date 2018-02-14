@@ -14,15 +14,17 @@ server.use(bodyParser.json());
 // TODO: your code to handle requests
 let id = 0;
 
-server.get('/posts', (req, res) => {
-	// const term = req.params.term;
-	// const newPosts = posts.filter(post => {
-	// 	return (post.postTitle.split('').includes(term)
-	// 				|| post.postContents.split('').includes(term));
-	// });
-	// if (term === null) res.json(posts);
-	// res.json(newPosts);
-	res.json(posts);
+server.get('/posts/', (req, res) => {
+	const term = req.query.term;
+	const newPosts = posts.filter(post => {
+		return (post.postTitle.split(/\s+/).includes(term)
+					|| post.postContents.split(/\s+/).includes(term));
+	});
+	if (term === undefined) {
+		res.json(posts);	
+	}
+	res.json(newPosts);
+	// res.json(posts);
 });
 
 server.post('/posts', (req, res) => {
